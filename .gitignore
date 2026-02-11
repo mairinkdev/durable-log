@@ -1,0 +1,13 @@
+/target
+**/*.rs.bk
+Cargo.lock
+*.pdb
+.idea
+.vscode
+*.swp
+*.swo
+
+# Local roadmap
+ROADMAP.md
+ROADMAP*.md
+docs/roadmap*.md

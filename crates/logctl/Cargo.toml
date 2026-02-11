@@ -1,0 +1,17 @@
+[package]
+name = "logctl"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+description = "CLI for inspecting and operating durable-log"
+license = "MIT OR Apache-2.0"
+
+[[bin]]
+name = "logctl"
+path = "src/main.rs"
+
+[lints]
+workspace = true
+
+[dependencies]
+durable-log = { path = "../durable-log" }

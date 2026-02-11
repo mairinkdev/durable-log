@@ -1,0 +1,11 @@
+[workspace]
+resolver = "2"
+members = ["crates/durable-log", "crates/logctl"]
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = "warn"
+pedantic = "warn"
+nursery = "warn"

@@ -1,0 +1,28 @@
+[package]
+name = "durable-log"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+description = "Crash-safe, segmented commit log / WAL with checksums and index"
+readme = "README.md"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/your-org/durable-log"
+keywords = ["wal", "log", "storage", "durable", "crash-safe"]
+categories = ["database-implementations", "data-structures"]
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+thiserror = "2"
+crc32fast = "1"
+
+[dev-dependencies]
+tempfile = "3"
+proptest = "1"
+
+[lints]
+workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
