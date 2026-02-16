@@ -12,4 +12,8 @@ pub enum Error {
     /// Invalid or unsupported record format (e.g. wrong magic or version).
     #[error("invalid format: {0}")]
     InvalidFormat(String),
+
+    /// Could not acquire the log directory lock (another writer may hold it).
+    #[error("log directory is locked: {0}")]
+    Locked(String),
 }

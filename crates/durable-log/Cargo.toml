@@ -16,6 +16,7 @@ path = "src/lib.rs"
 [dependencies]
 thiserror = "2"
 crc32fast = "1"
+fs2 = "0.4"
 
 [dev-dependencies]
 tempfile = "3"
