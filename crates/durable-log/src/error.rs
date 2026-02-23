@@ -16,4 +16,8 @@ pub enum Error {
     /// Could not acquire the log directory lock (another writer may hold it).
     #[error("log directory is locked: {0}")]
     Locked(String),
+
+    /// Checksum mismatch or invalid file structure.
+    #[error("data corruption: {0}")]
+    Corruption(String),
 }

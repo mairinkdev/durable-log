@@ -38,12 +38,26 @@ impl LogDir {
         fs::create_dir_all(&path).map_err(Error::from)?;
 
         let lock_path = path.join(LOCK_FILE_NAME);
-        let file = OpenOptions::new()
-            .create(true)
-            .write(true)
-            .truncate(false)
-            .open(&lock_path)
-            .map_err(Error::from)?;
+        
+        let mut file = None;
+        for i in 0..10 {
+            match OpenOptions::new()
+                .create(true)
+                .write(true)
+                .truncate(false)
+                .open(&lock_path)
+            {
+                Ok(f) => {
+                    file = Some(f);
+                    break;
+                }
+                Err(e) if i < 9 && e.kind() == std::io::ErrorKind::PermissionDenied => {
+                    std::thread::sleep(std::time::Duration::from_millis(20));
+                }
+                Err(e) => return Err(Error::from(e)),
+            }
+        }
+        let file = file.unwrap();
 
         file.try_lock_exclusive().map_err(|e| {
             Error::Locked(format!(

@@ -16,6 +16,9 @@ pub const VERSION_V1: u8 = 1;
 /// Record header size in bytes (fixed).
 pub const HEADER_LEN: usize = 24;
 
+/// Index entry size in bytes (fixed): offset (8) + position (8).
+pub const INDEX_ENTRY_LEN: usize = 16;
+
 /// Reserved flags for future use; must be 0 in v1.
 pub const FLAGS_NONE: u8 = 0;
 
@@ -56,6 +59,22 @@ impl RecordHeader {
         let mut hasher = Hasher::new();
         hasher.update(payload);
         hasher.finalize()
+    }
+
+    /// Verifies that the header's checksum matches the computed checksum of the payload.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`Error::Corruption`] if checksums do not match.
+    pub fn validate_checksum(&self, payload: &[u8]) -> Result<()> {
+        let actual = Self::checksum_of(payload);
+        if actual != self.checksum {
+            return Err(Error::Corruption(format!(
+                "checksum mismatch at offset {}: expected 0x{:08X}, got 0x{:08X}",
+                self.offset, self.checksum, actual
+            )));
+        }
+        Ok(())
     }
 }
 
